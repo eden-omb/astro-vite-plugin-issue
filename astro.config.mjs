@@ -1,3 +1,10 @@
+// Should be:
+// import content from '@originjs/vite-plugin-content
+// But has to be:
+import _content from '@originjs/vite-plugin-content'
+let content = _content.default
+
+/** @type {import('astro').AstroUserConfig} */
 export default {
   // projectRoot: '.',     // Where to resolve all URLs relative to. Useful if you have a monorepo project.
   // pages: './src/pages', // Path to Astro components, pages, and data
@@ -14,4 +21,7 @@ export default {
   renderers: [
     "@astrojs/renderer-svelte"
   ],
-};
+  vite: {
+    plugins: [content()]
+  }
+}

@@ -1,7 +1,21 @@
 ---
 import { Markdown } from 'astro/components';
+// Should be:
+// import yaml from './example.yaml'
+// But has to be:
+let yaml = await importYaml('./example.yaml')
+async function importYaml(path) {
+    let yaml = (await import(path)).default
+        .replace('var data = ', '')
+        .replace('; export default data;', '')
+    return Function(`"use strict"; return (${yaml})`)()
+}
 ---
 <article>
+    <div>
+        Imported yaml: {JSON.stringify(yaml)}
+    </div>
+
     <div class="banner">
         <p><strong>🧑‍🚀 Seasoned astronaut?</strong> Delete this file. Have fun!</p>
     </div>
